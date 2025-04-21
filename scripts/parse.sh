@@ -30,6 +30,10 @@ set -e
 
 # Combine all combined.json files to one all.json file:
 python3 scripts/combine.py
+
+# do not translate outdated all_refs.json
+python3 src/translate.py "$OUT_DIR" "$OUT_DIR/en" EN-US
+
 # Remove all dishes which are older than one day
 # and reorganize them in a more efficient format:
 python3 scripts/reformat.py

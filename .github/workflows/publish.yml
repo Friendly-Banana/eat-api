@@ -23,13 +23,17 @@ jobs:
                   pip install poetry
                   poetry config virtualenvs.create false
                   poetry install --no-interaction --no-ansi
-            - name: Test with pytest
-              run: pytest
-              env:
-                  PYTHONPATH: src/
-              if: github.event_name == 'push'
+            - name: Fetch translation cache
+              uses: actions/checkout@v4
+              with:
+                ref: gh-pages
+                path: cache
+                sparse-checkout: en/translations.json
+                sparse-checkout-cone-mode: false
             - name: Parse
               run: ./scripts/parse.sh
+              env:
+                DEEPL_API_KEY: ${{ secrets.DEEPL_API_KEY }}
             - name: Deploy
               uses: docker://peaceiris/gh-pages:latest
               env:

@@ -4,7 +4,6 @@ set -e
 
 CANTEEN_LIST=$(python3 src/main.py --canteen-ids)
 OUT_DIR="${OUT_DIR:-dist}"
-LANGUAGE="${LANGUAGE_EAT_API:-DE}"
 
 # Delete old output directory if it exists:
 if [ -d $OUT_DIR ]; then
@@ -14,9 +13,9 @@ fi
 mkdir -p $OUT_DIR
 
 parse(){
-    echo "Parsing menus for: $1 in $2..."
-    python3 src/main.py -p "$1" -j "./$OUT_DIR/$1" -c --language $2
-    echo "Parsing menus for: $1 done."
+    echo "Parsing menus for $1..."
+    python3 src/main.py -p "$1" -j "./$OUT_DIR/$1" -c
+    echo "Parsing menus for $1 done."
 }
 
 # Parse all canteens:
